@@ -1,21 +1,57 @@
 import pyb
 import utime
+import micropython
 
-def tick(timer):                # we will receive the timer object when being called
-    print('Tick')      # show current timer's counter value
-tim = pyb.Timer(4, freq=2)      # create a timer object using timer 4 - trigger at 1Hz
-tim.callback(tick)              # set the callback to our tick function
+global sample_en
+global square_toggle
+
+micropython.alloc_emergency_exception_buf(100)
+
+sample_en = 0
+square_toggle = 0
+time_since_start = 0
+
+pinC0_value = 0
+
+REF_VOLT = 3.3
+MAX_ADC = 4096
+
+adc0 = pyb.ADC(pyb.Pin.board.PC1)
+    
+
+def sampling_timer(self):              
+    global sample_en
+    sample_en = 1
+
+tim = pyb.Timer(4, freq=100)      
+tim.callback(sampling_timer)    
+
+
+def square_timer(self):              
+    global square_toggle
+    square_toggle = 1  
+
+tim2 = pyb.Timer(2, freq=0.2)      
+tim2.callback(square_timer)
+
 
 #Setup Pin C0
 pinC0 = pyb.Pin(pyb.Pin.board.PC0, pyb.Pin.OUT_PP)
 
 #Loop Forever
 while 1:
-    #Set value to 1
-    pinC0.value(1)
-    #Wait 5 sec
-    utime.sleep(5)
-    #Set value to 0
-    pinC0.value(0)
-    #Wait 5 sec
-    utime.sleep(5)
+
+    if square_toggle:
+        square_toggle = 0
+        pinC0_value = not pinC0_value
+        pinC0.value(pinC0_value)
+        time_since_start = 0
+    
+    if sample_en:
+        sample_en = 0
+
+        voltage = (adc0.read()/MAX_ADC) * REF_VOLT
+        print(str(time_since_start) + "," + str(voltage))
+
+        time_since_start += 10
+        
