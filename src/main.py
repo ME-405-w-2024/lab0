@@ -1,5 +1,6 @@
 """! @file main.py
-Micropython code for LAB0
+@brief Micropython code for LAB0
+
 LAB0 has two main functions, generating a square wave and reading measured voltages.
 The square wave is to occur at a frequency of 0.2Hz.
 The sampling of the voltages is to be in mV and done every 10ms.
@@ -32,7 +33,8 @@ int_queue = cqueue.IntQueue(QUEUE_SIZE)
 
 
 def adc_timer_setup(tim_num,frequency):
-    """! Setup for the ADC sampling timer
+    """! @brief Setup for the ADC sampling timer
+
     This function takes in a timer number and frequency, and performs the necessary
     setup functions to generate a timer.
     This timer is used to run the ADC voltage sampling function at a given frequency.
@@ -42,7 +44,8 @@ def adc_timer_setup(tim_num,frequency):
 
 
 def square_timer_setup(tim_num,frequency):
-    """! Setup for the square wave generation timer
+    """! @brief Setup for the square wave generation timer
+
     This function takes in a timer number and frequency, and performs the necessary
     setup functions to generate a timer.
     This timer is used to run the square wave generation flag function at a given frequency.
@@ -52,7 +55,8 @@ def square_timer_setup(tim_num,frequency):
 
 
 def adc_timer_irq(tim_num):
-    """! Interrupt callback function for sampling voltages
+    """! @brief Interrupt callback function for sampling voltages
+
     This function is called by the ADC sampling timer and reads the ADC at a given time.
     This value is then added to the queue to be used outside of the callback function.
     """
@@ -60,7 +64,8 @@ def adc_timer_irq(tim_num):
 
 
 def square_timer_irq(tim_num):
-    """! Interrupt callback function for setting pin states for square wave generation
+    """! @brief Interrupt callback function for setting pin states for square wave generation
+
     This function is called by the square wave generation timer sets a flag at a given rate.
     The flag is then used by the main loop to determine when it is time to toggle the
     pin that generates the square wave.
@@ -70,7 +75,8 @@ def square_timer_irq(tim_num):
 
 
 def step_response (square_pin: pyb.Pin, ADC_pin: pyb.ADC):
-    """! Forever loop to generate needed outputs
+    """! @brief Forever loop to generate needed outputs
+
     Reads flag from square wave timer to toggle pin state at the requested interval.
     Reads from adc data queue and converts to mV values to print over serial.
     Performs no functions between either of these tasks.
