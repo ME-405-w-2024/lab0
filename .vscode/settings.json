@@ -1,0 +1,10 @@
+{
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none"
+    },
+    "python.defaultInterpreterPath": "../stm32_venv",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+}
