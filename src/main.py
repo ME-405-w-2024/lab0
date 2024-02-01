@@ -85,12 +85,19 @@ def step_response (square_pin: pyb.Pin, ADC_pin: pyb.ADC):
     global sample_en
 
     time_since_start = 0
+
+    square_pin.value(0)
+
     while 1:
 
-        if square_toggle:
+        if square_toggle and not square_pin.value(): #If the square wave is low -> high
             square_toggle = 0
             square_pin.value(not square_pin.value())
             time_since_start = 0
+        
+        elif square_toggle:
+            break
+
 
         if int_queue.any():
             voltage = (int_queue.get()/MAX_ADC) * REF_VOLT
