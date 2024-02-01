@@ -75,7 +75,7 @@ def square_timer_irq(tim_num):
 
 
 def step_response (square_pin: pyb.Pin, ADC_pin: pyb.ADC):
-    """! @brief Forever loop to generate needed outputs
+    """! @brief Loop to generate needed outputs
 
     Reads flag from square wave timer to toggle pin state at the requested interval.
     Reads from adc data queue and converts to mV values to print over serial.

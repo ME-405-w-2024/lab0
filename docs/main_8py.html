@@ -116,7 +116,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a05d7aacf885223b1f6babf1de2f495e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt callback function for setting pin states for square wave generation.  <br /></td></tr>
 <tr class="separator:a05d7aacf885223b1f6babf1de2f495e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80becea021b7efec3dbe3812e5a40ce5" id="r_a80becea021b7efec3dbe3812e5a40ce5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80becea021b7efec3dbe3812e5a40ce5">main.step_response</a> (pyb.Pin square_pin, pyb.ADC ADC_pin)</td></tr>
-<tr class="memdesc:a80becea021b7efec3dbe3812e5a40ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forever loop to generate needed outputs.  <br /></td></tr>
+<tr class="memdesc:a80becea021b7efec3dbe3812e5a40ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loop to generate needed outputs.  <br /></td></tr>
 <tr class="separator:a80becea021b7efec3dbe3812e5a40ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
@@ -260,7 +260,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main.QUEUE_SIZE</b> = 
       </table>
 </div><div class="memdoc">
 
-<p>Forever loop to generate needed outputs. </p>
+<p>Loop to generate needed outputs. </p>
 <p>Reads flag from square wave timer to toggle pin state at the requested interval. Reads from adc data queue and converts to mV values to print over serial. Performs no functions between either of these tasks. </p>
 
 </div>
