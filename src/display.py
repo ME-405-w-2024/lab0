@@ -2,10 +2,12 @@ import math
 import time
 import tkinter
 from random import random
-from serial import Serial # this line not working!!!
+import serial
+import io
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.backends._backend_tk import (NavigationToolbar2Tk)
+
 
 def plot_example(plot_axes, plot_canvas, xlabel, ylabel):
     """!
@@ -15,12 +17,65 @@ def plot_example(plot_axes, plot_canvas, xlabel, ylabel):
     @param xlabel
     @param ylabel
     """
+
     times = [t / 7 for t in range(200)]
     rando = random() * 2 * math.pi - math.pi
     boing = [-math.sin(t + rando) * math.exp(-(t + rando) / 11) for t in times]
 
-    # Draw the plot using 
+    # Draw the plot
     plot_axes.plot(times, boing)
+    plot_axes.set_xlabel(xlabel)
+    plot_axes.set_ylabel(ylabel)
+    plot_axes.grid(True)
+    plot_canvas.draw()
+
+
+def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
+
+    times = []
+    voltages = []   
+
+    ser = serial.Serial('COM6', 115200, timeout=1) # this will not work on unix
+
+    try:
+        while True:
+            line = ser.readline()
+            
+            if not line:
+                break
+    finally:
+        ser.close()
+
+
+    # Draw the plot
+    plot_axes.plot(times, voltages)
+    plot_axes.set_xlabel(xlabel)
+    plot_axes.set_ylabel(ylabel)
+    plot_axes.grid(True)
+    plot_canvas.draw()
+
+
+def plot_RC_response(plot_axes, plot_canvas, xlabel, ylabel):
+
+    # define constants
+    R = 100000
+    C = 0.0000033
+    V_REF = 3.3
+
+    # set up empty voltage array 
+    voltages = [0] * 500
+    
+    # set up times array up to 5000ms
+    times = [t for t in range(0, 5000, 10)]
+
+    # generate data after rising edge
+    voltages += [V_REF*(1-math.exp(-(t/1000)/(R*C))) for t in times]
+
+    # append a new set of data to the end of times to make array lengths match
+    times += [t for t in range(5000, 10000, 10)]
+
+    # Draw the plot
+    plot_axes.plot(times, voltages)
     plot_axes.set_xlabel(xlabel)
     plot_axes.set_ylabel(ylabel)
     plot_axes.grid(True)
@@ -72,7 +127,7 @@ def tk_matplot(plot_function, xlabel, ylabel, title):
 
 if __name__ == "__main__":
     
-    tk_matplot(plot_example,
+    tk_matplot(plot_RC_response,
                xlabel="Time [ms]",
-               ylabel="Boing [cm]",
+               ylabel="Voltage [V]",
                title="title")
