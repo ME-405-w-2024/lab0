@@ -1,3 +1,15 @@
+"""!
+@file display.py
+
+Run real and simulated dynamic response tests and plot the results. It uses Tkinter, an
+old-fashioned and ugly but useful GUI library which is included in Python by default.
+This file is based loosely on an example found at
+https://matplotlib.org/stable/gallery/user_interfaces/embedding_in_tk_sgskip.html
+Original program, based on example from above listed source and from reference code
+distributed as part of the ME405 curriculum "lab0example.py". 
+"""
+
+# Imports
 import math
 import time
 import tkinter
@@ -8,37 +20,29 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.backends._backend_tk import (NavigationToolbar2Tk)
 
-#DEV_NAME = "COM6"
-DEV_NAME = "/dev/cu.usbmodem2061307251302"
-
-
-def plot_example(plot_axes, plot_canvas, xlabel, ylabel):
-    """!
-    boilerplate text
-    @param plot_axes
-    @param plot_canvas
-    @param xlabel
-    @param ylabel
-    """
-
-    times = [t / 7 for t in range(200)]
-    rando = random() * 2 * math.pi - math.pi
-    boing = [-math.sin(t + rando) * math.exp(-(t + rando) / 11) for t in times]
-
-    # Draw the plot
-    plot_axes.plot(times, boing)
-    plot_axes.set_xlabel(xlabel)
-    plot_axes.set_ylabel(ylabel)
-    plot_axes.grid(True)
-    plot_canvas.draw()
+# Constants
+# CHANGE THIS DEVICE DEPENDING ON SYSTEM TYPE
+DEV_NAME = "COM6"
+# DEV_NAME = "/dev/cu.usbmodem2061307251302"
 
 
 def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
+    """!
+    @brief Plot data from a real-world RC response.
+    This function reads data from a serial port, then strips lines of strings,
+    converting them to floating point numbers. Successfully gathered data is appended
+    to arrays of time and voltage.
+    To simplify code, plotting of the simulated response is called at the end of this function.
+    @param plot_axes The set of axes to plot data onto, from Matplotlib
+    @param plot_canvas The canvas to plot data onto, from Matplotlib
+    @param xlabel The label for the horizontal axis
+    @param ylabel The label for the vertical axis
+    """
 
     times = []
     voltages = []   
 
-    ser = serial.Serial(DEV_NAME, 115200, timeout=1) 
+    ser = serial.Serial(DEV_NAME, 115200, timeout=5) 
 
     try:
         ser.write("\n".encode())
@@ -55,10 +59,11 @@ def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
                 voltages.append(float(split_line[1]))
 
             if not line:
+                print("ailed to get data")
                 break
     finally:
+        print("Closing serial port")
         ser.close()
-
 
     # Draw the plot
     plot_axes.plot(times, voltages,marker=".")
@@ -67,10 +72,21 @@ def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
     plot_axes.grid(True)
     plot_canvas.draw()
 
+    # Plot the simulated response
     plot_RC_response(plot_axes,plot_canvas,xlabel,ylabel)
 
 
 def plot_RC_response(plot_axes, plot_canvas, xlabel, ylabel):
+    """!
+    @brief Plot a simulated RC response.
+    This function generates a data set of times and corresponding voltages.
+    Generated data is intended to align with the real-world data gathered from the
+    step response of an RC circuit occuring at time = 5s, and data arrays are offset to accomplish this. 
+    @param plot_axes The set of axes to plot data onto, from Matplotlib
+    @param plot_canvas The canvas to plot data onto, from Matplotlib
+    @param xlabel The label for the horizontal axis
+    @param ylabel The label for the vertical axis
+    """
 
     # define constants
     R = 100000
@@ -99,11 +115,15 @@ def plot_RC_response(plot_axes, plot_canvas, xlabel, ylabel):
 
 def tk_matplot(plot_function, xlabel, ylabel, title):
     """!
-    text
-    @param plot_function
-    @param xlabel
-    @param ylabel
-    @param title
+    @brief Create a TK windows with embedded Matplotlib data.
+    This function makes the window, displays it, and runs the user interface
+    until the user closes the window. The plot function, which must have been
+    supplied by the user, should draw the plot on the supplied plot axes and
+    call the draw() function belonging to the plot canvas to show the plot.
+    @param plot_function The function passed that plots data
+    @param xlabel The label for the horizontal axis
+    @param ylabel The label for the vertical axis
+    @param title The title for the window opened
     """
 
     tk_root = tkinter.Tk()
@@ -141,7 +161,7 @@ def tk_matplot(plot_function, xlabel, ylabel, title):
 
 
 if __name__ == "__main__":
-    
+
     tk_matplot(plot_RC_data,
                xlabel="Time [ms]",
                ylabel="Voltage [V]",

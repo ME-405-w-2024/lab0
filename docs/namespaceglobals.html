@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ME 405 Lab 0: src/main.py File Reference</title>
+<title>ME 405 Lab 0: globals Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('main_8py.html',''); initResizable(); });
+$(function(){initNavTree('namespaceglobals.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -92,37 +92,51 @@ $(function(){initNavTree('main_8py.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">main.py File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">globals Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Micropython code for LAB0.  
+<p><br  />
+  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacemain" id="r_namespacemain"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html">main</a></td></tr>
-<tr class="memdesc:namespacemain"><td class="mdescLeft">&#160;</td><td class="mdescRight"><br  />
- <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aec5572f7e2399c6f4c584b2d204532c7" id="r_aec5572f7e2399c6f4c584b2d204532c7"><td class="memItemLeft" align="right" valign="top"><a id="aec5572f7e2399c6f4c584b2d204532c7" name="aec5572f7e2399c6f4c584b2d204532c7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>main.square_toggle</b></td></tr>
-<tr class="separator:aec5572f7e2399c6f4c584b2d204532c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:acbd65fc613b166fb04d5b3ef4bb9741c" id="r_acbd65fc613b166fb04d5b3ef4bb9741c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbd65fc613b166fb04d5b3ef4bb9741c">init</a> ()</td></tr>
+<tr class="memdesc:acbd65fc613b166fb04d5b3ef4bb9741c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization for global variables across files.  <br /></td></tr>
+<tr class="separator:acbd65fc613b166fb04d5b3ef4bb9741c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Micropython code for LAB0. </p>
-<p>This file runs as main on the NUCLEO board. The function generation portion of this lab has two main functions, generating a square wave and reading measured voltages. The square wave is to occur at a frequency of 0.2Hz. The sampling of the voltages is to be in mV and done every 10ms. This file sets up the interrupt timers and begins the step response. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p><br  />
+ </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="acbd65fc613b166fb04d5b3ef4bb9741c" name="acbd65fc613b166fb04d5b3ef4bb9741c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd65fc613b166fb04d5b3ef4bb9741c">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">globals.init </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization for global variables across files. </p>
+<p>Pins are declared to be ADC or inputs, and a queue is generated to read data written during interrupts. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="main_8py.html">main.py</a></li>
+    <li class="navelem"><a class="el" href="namespaceglobals.html">globals</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>

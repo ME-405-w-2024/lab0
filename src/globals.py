@@ -1,7 +1,22 @@
+"""! 
+@file globals.py
+@brief Global variable declaration for LAB0
+
+This file declares global variables for use across multiple files. 
+This is the "canonical" method of sharing variables between files, see the following:
+https://docs.python.org/3/faq/programming.html#how-do-i-share-global-variables-across-modules
+"""
+
 import cqueue
 import pyb
 
 def init():
+    """! 
+    @brief Initialization for global variables across files.
+    Pins are declared to be ADC or inputs, and a queue 
+    is generated to read data written during interrupts.
+    """
+
     global square_toggle
     global int_queue
     global pinC0
