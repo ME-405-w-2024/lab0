@@ -8,6 +8,9 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.backends._backend_tk import (NavigationToolbar2Tk)
 
+#DEV_NAME = "COM6"
+DEV_NAME = "/dev/cu.usbmodem2061307251302"
+
 
 def plot_example(plot_axes, plot_canvas, xlabel, ylabel):
     """!
@@ -35,12 +38,22 @@ def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
     times = []
     voltages = []   
 
-    ser = serial.Serial('COM6', 115200, timeout=1) # this will not work on unix
+    ser = serial.Serial(DEV_NAME, 115200, timeout=1) 
 
     try:
+        ser.write("\n".encode())
         while True:
-            line = ser.readline()
+            line = ser.readline().decode()
             
+            line = line.strip('\r\n')
+
+            split_line = line.split(",")
+
+            if len(split_line) > 1:
+
+                times.append(float(split_line[0]))
+                voltages.append(float(split_line[1]))
+
             if not line:
                 break
     finally:
@@ -48,11 +61,13 @@ def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
 
 
     # Draw the plot
-    plot_axes.plot(times, voltages)
+    plot_axes.plot(times, voltages,marker=".")
     plot_axes.set_xlabel(xlabel)
     plot_axes.set_ylabel(ylabel)
     plot_axes.grid(True)
     plot_canvas.draw()
+
+    plot_RC_response(plot_axes,plot_canvas,xlabel,ylabel)
 
 
 def plot_RC_response(plot_axes, plot_canvas, xlabel, ylabel):
@@ -127,7 +142,7 @@ def tk_matplot(plot_function, xlabel, ylabel, title):
 
 if __name__ == "__main__":
     
-    tk_matplot(plot_RC_response,
+    tk_matplot(plot_RC_data,
                xlabel="Time [ms]",
                ylabel="Voltage [V]",
-               title="title")
+               title="Step Response")

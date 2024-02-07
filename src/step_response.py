@@ -5,7 +5,6 @@ import cqueue
 import globals
 
 #Allocate memory for debug dump
-micropython.alloc_emergency_exception_buf(100)
 
 #Setup constants for ADC conversion
 REF_VOLT = 3.3
@@ -21,6 +20,7 @@ def adc_timer_setup(tim_num: int,frequency: float):
     """
     adc_tim = pyb.Timer(tim_num, freq=frequency)      
     adc_tim.callback(adc_timer_irq)
+    adc_tim.counter(0)
 
 
 def square_timer_setup(tim_num:int,frequency:float):
@@ -32,6 +32,7 @@ def square_timer_setup(tim_num:int,frequency:float):
     """
     sqr_tim = pyb.Timer(tim_num, freq=frequency)      
     sqr_tim.callback(square_timer_irq)
+    sqr_tim.counter(0)
 
 
 def adc_timer_irq(tim_num):
@@ -65,6 +66,8 @@ def step_response (square_pin: pyb.Pin, ADC_pin: pyb.ADC):
 
     square_pin.value(0)
 
+    globals.square_toggle = 0
+
     while 1:
 
         if globals.square_toggle and not square_pin.value(): #If the square wave is low -> high
@@ -73,6 +76,7 @@ def step_response (square_pin: pyb.Pin, ADC_pin: pyb.ADC):
         
         elif globals.square_toggle:
             print("End")
+            square_pin.value(0)
             break
 
 
