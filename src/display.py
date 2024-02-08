@@ -22,8 +22,8 @@ from matplotlib.backends._backend_tk import (NavigationToolbar2Tk)
 
 # Constants
 # CHANGE THIS DEVICE DEPENDING ON SYSTEM TYPE
-DEV_NAME = "COM6"
-# DEV_NAME = "/dev/cu.usbmodem2061307251302"
+#DEV_NAME = "COM6"
+DEV_NAME = "/dev/cu.usbmodem2052339C57522"
 
 
 def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
@@ -59,7 +59,7 @@ def plot_RC_data(plot_axes, plot_canvas, xlabel, ylabel):
                 voltages.append(float(split_line[1]))
 
             if not line:
-                print("ailed to get data")
+                print("Failed to get data")
                 break
     finally:
         print("Closing serial port")
